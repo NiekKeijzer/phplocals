@@ -9,14 +9,36 @@ class Context
     private static $on_enter = array();
     private static $on_exit = array();
 
+    public static function getLocal ()
+    {
+        return static::$local;
+    }
+
     public static function onEnter(callable $callback)
     {
         static::$on_enter[] = $callback;
     }
 
+    public static function getOnEnter ()
+    {
+        return static::$on_enter;
+    }
+
     public static function onExit(callable $callback)
     {
         static::$on_exit[] = $callback;
+    }
+
+    public static function getOnExit ()
+    {
+        return static::$on_exit;
+    }
+
+    public static function flush ()
+    {
+        static::$on_enter = array();
+        static::$on_exit = array();
+        static::$local = null;
     }
 
     private static function runCallbacks(array $callbacks, ...$args)
