@@ -7,15 +7,21 @@ namespace PHPLocals\Manager;
 final class BaseContext implements ContextManagerInterface
 {
     private $callback;
-    private $on_enter;
-    private $on_exit;
+    private $on_enter = array();
+    private $on_exit = array();
     private $args;
 
-    public function __construct (callable $callback, array $on_enter = array(), array $on_exit = array(), ...$args)
+    public function __construct (callable $callback, $on_enter = null, $on_exit = null, ...$args)
     {
         $this->callback = $callback;
-        $this->on_enter = $on_enter;
-        $this->on_exit = $on_exit;
+        if (null !== $on_enter) {
+            $this->on_enter = \is_callable($on_enter) ? [$on_enter, ] : $on_enter;
+        }
+
+        if (null !== $on_exit) {
+            $this->on_exit = \is_callable($on_exit) ? [$on_exit, ] : $on_exit;
+        }
+
         $this->args = $args;
     }
 

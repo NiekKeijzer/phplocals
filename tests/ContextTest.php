@@ -6,7 +6,11 @@ use PHPLocals\Local;
 
 class ContextTest extends \PHPUnit\Framework\TestCase
 {
-
+    public function setUp ()
+    {
+        Context::flush();
+    }
+    
     public function testOnEnter ()
     {
         static::assertEmpty(Context::getOnEnter());
