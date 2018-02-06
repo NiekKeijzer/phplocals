@@ -58,13 +58,18 @@ class Local
     /**
      * Unset a variable in the local scope. This
      *  will _not_ remove it from the parent's
-     *  scope.
+     *  scope unless explicitly told to do so.
      *
      * @param $key
+     * @param bool $parent
      */
-    public function del($key)
+    public function del($key, bool $parent = false)
     {
         unset($this->variables[$key]);
+
+        if ($parent && null !== $this->parent) {
+            $this->parent->del($key);
+        }
     }
 
     /**
