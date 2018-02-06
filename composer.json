@@ -13,7 +13,9 @@
         }
     ],
     "require": {},
-    "psr-0": {
-        "PHPLocals": "src/"
+    "autoload": {
+        "psr-0": {
+            "PHPLocals": "src/"
+        }
     }
 }

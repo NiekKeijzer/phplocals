@@ -6,8 +6,8 @@ namespace PHPLocals;
 class Context
 {
     private static $local;
-    private static $on_enter;
-    private static $on_exit;
+    private static $on_enter = array();
+    private static $on_exit = array();
 
     public static function onEnter(callable $callback)
     {
@@ -22,7 +22,7 @@ class Context
     private static function runCallbacks(array $callbacks, ...$args)
     {
         foreach ($callbacks as $callback) {
-            call_user_func_array($callback, $args);
+            \call_user_func_array($callback, $args);
         }
     }
 
