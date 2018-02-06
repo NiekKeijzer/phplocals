@@ -3,6 +3,9 @@
 namespace PHPLocals;
 
 
+use PHPLocals\Manager\BaseContext;
+use PHPLocals\Manager\ContextManagerInterface;
+
 class Context
 {
     private static $local;
@@ -59,11 +62,19 @@ class Context
         return static::$local;
     }
 
+    /**
+     * @param callable|\PHPLocals\Manager\ContextManagerInterface $callback
+     * @param array ...$args
+     */
     public static function enter(callable $callback, ...$args)
     {
+        if (!($callback instanceof ContextManagerInterface)) {
+            $callback = new BaseContext($callback, static::$on_enter, static::$on_exit, $args);
+        }
+
         // Ensure we create a new Local
         $local = static::getContext(true);
-        static::runCallbacks(static::$on_enter);
+        $callback->enter();
 
         $exception = null;
         try {
@@ -71,18 +82,13 @@ class Context
         } catch (\Throwable $e) {
             $exception = $e;
         } finally {
-            static::exit($exception);
+            $callback->exit($exception);
+
+            $ctx = static::getContext();
+            // Switch the current local for it's parent. Which
+            //  might be `null` once we are at the end of the
+            //  call chain.
+            static::$local = $ctx->getParent();
         }
-    }
-
-    public static function exit(\Throwable $exception = null)
-    {
-        static::runCallbacks(static::$on_exit, $exception);
-
-        $ctx = static::getContext();
-        // Switch the current local for it's parent. Which
-        //  might be `null` once we are at the end of the
-        //  call chain.
-        static::$local = $ctx->getParent();
     }
 }

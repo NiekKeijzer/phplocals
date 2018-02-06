@@ -6,7 +6,9 @@ namespace PHPLocals\Manager;
 
 interface ContextManagerInterface
 {
-    public function __enter ();
+    public function __invoke ();
 
-    public function __exit (\Throwable $exception = null);
+    public function enter ();
+
+    public function exit (\Throwable $exception = null);
 }

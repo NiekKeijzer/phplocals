@@ -129,31 +129,6 @@ class ContextTest extends \PHPUnit\Framework\TestCase
 
             static::assertEquals($ctx->get('foo'), 123);
         });
-    }
-
-    public function testExit ()
-    {
-        Context::flush();
-        Context::enter(function () {
-            static::assertNotNull(Context::getLocal());
-
-            $ctx = Context::getContext();
-            static::assertNull($ctx->getParent());
-        });
-
-        static::assertNull(Context::getLocal());
-    }
-
-    public function testExitChild ()
-    {
-        Context::flush();
-        Context::enter(function () {
-            Context::enter(function () {});
-
-            // Make sure we still have a local even though
-            //  we just exited a context
-            static::assertNotNull(Context::getLocal());
-        });
 
         static::assertNull(Context::getLocal());
     }
