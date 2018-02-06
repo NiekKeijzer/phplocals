@@ -1,6 +1,6 @@
 <?php
 
-namespace phplocals;
+namespace PHPLocals;
 
 
 class Local
