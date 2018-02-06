@@ -1,0 +1,16 @@
+{
+    "name": "niekkeijzer/phplocals",
+    "description": "Thread locals in PHP",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Niek Keijzer",
+            "email": "info@niekkeijzer.com"
+        }
+    ],
+    "require": {}
+}
