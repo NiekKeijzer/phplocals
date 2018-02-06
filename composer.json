@@ -12,5 +12,8 @@
             "email": "info@niekkeijzer.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "psr-0": {
+        "PHPLocals": "src/"
+    }
 }
